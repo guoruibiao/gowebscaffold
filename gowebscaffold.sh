@@ -13,7 +13,7 @@ import (
 )
 
 func HomeIndex(ctx *gin.Context) {
-	// ctx.Redirect(http.StatusTemporaryRedirect, "/templates/image_index.html")
+	ctx.JSON(http.StatusOK, map[string]interface{}{"data":[]string{"It", "works."}, "err": nil})
 }
 EOF
 }
@@ -50,7 +50,7 @@ func init() {
 }
 
 func main() {
-	//router := gin.Default()
+  router := gin.Default()
 	// 静态文件路由设置
 	//router.Static("/statics/", "./statics")
 	//router.Static("/templates/", "./templates")
@@ -59,10 +59,10 @@ func main() {
 	//routers.Init(router)
 
 	// 服务启动
-	//err := router.Run(":8001")
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
+	err := router.Run(":8080")
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 EOF
 }
