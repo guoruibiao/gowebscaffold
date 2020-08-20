@@ -26,12 +26,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 func Init(engine *gin.Engine) {
-  /*
-	indexRouter := engine.Group("/")
-	{
-		indexRouter.GET("/index", controllers.HomeIndex)
-	}
-	*/
+  
+    indexRouter := engine.Group("/")
+    {
+        indexRouter.GET("/index", controllers.HomeIndex)
+    }
 }
 EOF
 }
@@ -50,19 +49,19 @@ func init() {
 }
 
 func main() {
-  router := gin.Default()
-	// 静态文件路由设置
-	//router.Static("/statics/", "./statics")
-	//router.Static("/templates/", "./templates")
+    router := gin.Default()
+    // 静态文件路由设置
+    router.Static("/statics/", "./statics")
+    router.Static("/templates/", "./templates")
 
-	// 动态注册服务路由
-	//routers.Init(router)
+    // 动态注册服务路由
+    routers.Init(router)
 
-	// 服务启动
-	err := router.Run(":8080")
-	if err != nil {
-		log.Fatal(err)
-	}
+    // 服务启动
+    err := router.Run(":8080")
+    if err != nil {
+	log.Fatal(err)
+    }
 }
 EOF
 }
@@ -87,7 +86,10 @@ function generate() {
     if [ ! -d "$1/controllers" ]; then mkdir -p "$1"/controllers ; fi
     if [ ! -f "$1/controllers/index.go" ]; then generate_controllers_index "$1/controllers/index.go"; fi
 
+    if [ ! -d "$1/conf" ]; then mkdir -p "$1"/conf ; fi
     if [ ! -d "$1/models" ]; then mkdir -p "$1"/models ; fi
+    if [ ! -d "$1/scripts" ]; then mkdir -p "$1"/scripts ; fi
+    if [ ! -d "$1/library" ]; then mkdir -p "$1"/library ; fi
     if [ ! -d "$1/routers" ]; then mkdir -p "$1"/routers ; fi
     if [ ! -f "$1/routers/router.go" ]; then generate_routers_router "$1"/routers/router.go ; fi
 
