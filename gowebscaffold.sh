@@ -2,6 +2,7 @@
 ACTION_NAME=$1
 PROJECT_NAME=$2
 #CURRENT_PWD=`pwd`
+VUE_MIN_JS_URL="https://vuejs.org/js/vue.min.js"
 
 function generate_controllers_index() {
     cat > "$1"<<EOF
@@ -73,9 +74,22 @@ function generate_templates_index() {
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="/statics/js/vue.min.js">
 </head>
 <body>
+  <div id="app"> {{message}} </div>
 
+  <script>
+    var app = new Vue({
+        el:"#app",
+        data: {
+            message: "<h3>It works.</h3>"
+        },
+        methods: {
+
+        }
+    });
+  </script>
 </body>
 </html>
 EOF
@@ -87,6 +101,7 @@ function generate() {
     if [ ! -f "$1/controllers/index.go" ]; then generate_controllers_index "$1/controllers/index.go"; fi
 
     if [ ! -d "$1/conf" ]; then mkdir -p "$1"/conf ; fi
+    if [ ! -d "$1/cmd" ]; then mkdir -p "$1"/cmd ; fi
     if [ ! -d "$1/models" ]; then mkdir -p "$1"/models ; fi
     if [ ! -d "$1/scripts" ]; then mkdir -p "$1"/scripts ; fi
     if [ ! -d "$1/library" ]; then mkdir -p "$1"/library ; fi
@@ -96,6 +111,7 @@ function generate() {
     if [ ! -d "$1/statics" ]; then mkdir -p "$1"/statics ; fi
     if [ ! -d "$1/statics/css" ]; then mkdir -p "$1"/statics/css ; fi
     if [ ! -d "$1/statics/js" ]; then mkdir -p "$1"/statics/js ; fi
+    if [ ! -f "$1/statics/js/vue.min.js" ]; then wget VUE_MIN_JS_URL -o "$1/statics/js/vue.min.js"; fi
     if [ ! -d "$1/statics/img" ]; then mkdir -p "$1"/statics/img ; fi
 
     if [ ! -d "$1/templates" ]; then mkdir -p "$1"/templates ; fi
